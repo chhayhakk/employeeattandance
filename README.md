@@ -1,7 +1,7 @@
 ###Setting Up Project Laravel v10.*
 ````
 1. Clone From Github
-    url: git clone https://github.com/pinchai/hr34.git
+    url: git clone https://github.com/chhayhakk/employeeattandance.git
 
 2. Install Vendor by using composer
     cmd: composer install --ignore-platform-reqs
