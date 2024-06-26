@@ -6,6 +6,7 @@
  */
 
 /* eslint-disable camelcase */
+
 document.getElementById('refreshButton').addEventListener('click', function (event) {
   event.preventDefault(); // Prevent default link behavior
   

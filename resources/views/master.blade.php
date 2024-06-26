@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>HR SYS ST3.4</title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -16,10 +18,12 @@
     <!-- Include SweetAlert2 CSS and JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     {{-- <link rel="stylesheet" href="{{ asset('dist/css/admin.css') }}"> --}}
 </head>
 <body class="hold-transition sidebar-mini">
+    
 <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -93,7 +97,8 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image position-relative">
-                    <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+                    <input type="file" id="profile__avatar_input" style="display:none"></input>
+                    <img src="{{ Auth::user()->profile ? asset('storage/image/' . Auth::user()->profile) : asset('main/img/avatar.svg') }}" class="img-circle elevation-2" alt="User Image" id="profile__avatar" >
                     <span class="online-indicator"></span>
                 </div>
                 <div class="info">
@@ -116,6 +121,7 @@
                             </p>
                         </a>
                     </li>
+                    @if(auth()->user()->role=='admin')
                     <li class="nav-item">
                         <a href="{{ url('/admin/user') }}"
                            class="nav-link {{ url()->current() == url('/admin/user') || url()->current() == url('/admin/search_users') ? 'active' : '' }}"
@@ -127,6 +133,7 @@
                             </p>
                         </a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon far fa-clock"></i>
@@ -187,8 +194,70 @@
         rights reserved.
     </footer>
 </div>
+<script>
+    // Function to read and display selected avatar image
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
+            reader.onload = function(e) {
+                $('#profile__avatar').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+            // Prepare form data for AJAX
+            var formData = new FormData();
+            formData.append('file', input.files[0]);
+
+            // Send AJAX request to upload the file
+            $.ajax({
+                url: '{{ route('upload-avatar') }}', // Adjust route name if necessary
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log('File uploaded successfully:', response);
+                    // Ensure response contains path attribute
+                    if (response.path) {
+                        $('#profile__avatar').attr('src', response.path);
+                        Swal.fire({
+                        icon: 'success',
+                        title: 'File Upload Success',
+                        text: 'You have updated your profile.'
+                    });
+                    } else {
+                        console.error('No path in response:', response);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('File upload failed:', textStatus, errorThrown);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'File Upload Failed',
+                        text: 'An error occurred while uploading the file.'
+                    });
+                }
+            });
+        }
+    }
+
+    // Trigger file input click when avatar image is clicked
+    $('#profile__avatar').on('click', function() {
+        $('#profile__avatar_input').click();
+    });
+
+    // Handle file input change event
+    $('#profile__avatar_input').on('change', function() {
+        readURL(this);
+    });
+</script>
 <!-- jQuery -->
+
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

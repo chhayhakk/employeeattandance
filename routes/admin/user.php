@@ -26,6 +26,7 @@ Route::post('/admin/update_status', [App\Http\Controllers\UsersController::class
 
 
 Route::get('/admin/search_users', [App\Http\Controllers\UsersController::class, 'searchUsers'])->name('search_users');
+Route::post('/admin/upload_avatar', [App\Http\Controllers\UsersController::class, 'storeimage'])->name('upload-avatar');
 
 
 

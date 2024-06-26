@@ -22,12 +22,13 @@ Route::get('/', function(){
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('dashboard');
-    });
+    })->name('dashboard');
 
     Route::get('/admin', function () {
         return view('dashboard');
     });
 
     include 'admin/user.php';
+    include 'admin/attendance.php';
 });
 

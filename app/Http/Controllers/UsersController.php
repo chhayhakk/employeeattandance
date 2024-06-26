@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -103,7 +106,28 @@ class UsersController extends Controller
 
         return view('user.user', ['data' => $data]);
     }    
+    public function storeimage(Request $request)
+{
     
+    
+    if ($request->hasFile('file')) {
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+        $imageName = time().'.'.$extension;
+        $file->storeAs('public/image', $imageName);
+        
+        $user = Auth::user();
+        DB::table('users')
+            ->where('id', $user->id)
+            ->update(['profile' => $imageName]);
+
+        // Return the path to the stored file as a complete URL
+        $imageUrl = Storage::url('public/image/' . $imageName);
+        return response()->json(['path' => $imageUrl]);
+    }
+    
+    return response()->json(['error' => 'No file uploaded.'], 400);
+}
     
 
 }

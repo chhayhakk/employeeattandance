@@ -21,6 +21,7 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
+                @if(auth()->user()->role=='admin')
                 <div class="row">
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
@@ -82,8 +83,79 @@
                         </div>
                     </div>
                     <!-- ./col -->
+                    
+                </div>
+                @endif
+                
+                <div class="row">
+                    
+                    <div class="col-12 bg-primary">
+                        <a href="{{route('clock_in').'?id='. auth()->user()->id}}" id="clockInOutButton">
+                        <button class="btn btn-primary w-100" id="clockInOutButton" type="button" style="height:15vh">
+                            <i class="fas fa-user-clock" ></i>
+                            <span style="font-size:24px" id="clockInOutButtonText" >
+                                @if (auth()->user()->clock_in)
+                                Clock Out
+                            @else
+                                Clock In
+                            @endif
+                        </span>
+                       
+                        </button>
+                        </a>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        @if(session('ip_error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Connection Error',
+                text: 'Please connect to company wifi',
+                confirmButtonText: 'OK'
+            });
+        @endif
+    
+        @if(session('clock_in_error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Clock-In Error',
+                    text: 'You are already clocked in today.',
+                    confirmButtonText: 'OK'
+                });
+        @endif
+    
+        @if(session('success_clock_in'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Clock-In Success',
+                    text: 'You have successfully clocked in.',
+                    confirmButtonText: 'OK'
+                }).then(function() {
+            // Update button text to "Clock Out" and route to 'clock_out' after successful clock-in
+            $('#clockInOutButton').attr('href', "{{ route('clock_out') . '?id=' . auth()->user()->id }}");
+            $('#clockInOutButtonText').text('Clock Out');
+        });
+        @endif
+        @if(session('success_clock_out'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Clock-Out Success',
+                    text: 'You have successfully clocked out.',
+                    confirmButtonText: 'OK'
+                }).then(function() {
+            // Update button text to "Clock In" and route to 'clock_in' after successful clock-out
+            $('#clockInOutButton').attr('href', "{{ route('clock_in') . '?id=' . auth()->user()->id }}");
+            $('#clockInOutButtonText').text('Clock In');
+        });
+        @endif
+        
+
+       
+   
+    </script>
+    
 @endsection
