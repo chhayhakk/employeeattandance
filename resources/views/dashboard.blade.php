@@ -10,8 +10,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item"><a href="#">អ្នកប្រើប្រាស់</a></li>
+                            <li class="breadcrumb-item active">ផ្ទាំងគ្រប់គ្រង</li>
                         </ol>
                     </div>
                 </div>
@@ -27,14 +27,15 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>150</h3>
+                                <h3 style="font-family: Kantumruy Pro">{{ auth()->user()->count() }}</h3>
 
-                                <p>New Orders</p>
+
+                                <p style="font-family: Kantumruy Pro">អ្នកប្រើប្រាស់</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" style="font-family: Kantumruy Pro" class="small-box-footer">ព័ត៏មានបន្ថែម <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -49,7 +50,7 @@
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer" style="font-family: Kantumruy Pro">ព័ត៏មានបន្ថែម <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -64,7 +65,7 @@
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer" style="font-family: Kantumruy Pro">ព័ត៏មានបន្ថែម <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -79,7 +80,7 @@
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer" style="font-family: Kantumruy Pro">ព័ត៏មានបន្ថែម  <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->

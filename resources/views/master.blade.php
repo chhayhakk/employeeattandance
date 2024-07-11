@@ -18,7 +18,7 @@
     <!-- Include SweetAlert2 CSS and JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     {{-- <link rel="stylesheet" href="{{ asset('dist/css/admin.css') }}"> --}}
 </head>
@@ -98,7 +98,7 @@
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image position-relative">
                     <input type="file" id="profile__avatar_input" style="display:none"></input>
-                    <img src="{{ Auth::user()->profile ? asset('storage/image/' . Auth::user()->profile) : asset('main/img/avatar.svg') }}" class="img-circle elevation-2" alt="User Image" id="profile__avatar" >
+                    <img src="{{ Auth::user()->profile ? asset('storage/image/' . Auth::user()->profile) : asset('dist/img/avatar.svg') }}" class="img-circle elevation-2" alt="User Image" id="profile__avatar" >
                     <span class="online-indicator"></span>
                 </div>
                 <div class="info">
@@ -135,14 +135,15 @@
                     </li>
                     @endif
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{url('/admin/attendance')}}"class="nav-link {{ url()->current() == url('/admin/attendance') ? 'active' : '' }}"
+                            >
                             <i class="nav-icon far fa-clock"></i>
                             <p style="font-family: Kantumruy Pro">
                                 វត្តមាន
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item menu-open1">
+                    {{-- <li class="nav-item menu-open1">
                         <a href="#" class="nav-link active1">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
@@ -164,7 +165,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

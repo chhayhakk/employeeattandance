@@ -16,10 +16,15 @@ document.getElementById('refreshButton').addEventListener('click', function (eve
   // Refresh the page after a short delay to ensure the loading overlay is visible
   setTimeout(function () {
       // Reload the page without any query parameters
+      // location.reload();
+      // window.location.href = window.location.origin;
       window.location.href = window.location.origin + '/admin/user';
 
   }, 500); // 0.5 second delay
 });
+
+
+
 
 (function ($) {
   'use strict'
